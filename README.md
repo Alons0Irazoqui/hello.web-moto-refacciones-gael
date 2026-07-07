@@ -231,7 +231,7 @@ Carpeta [`imagenes/`](imagenes/) — material gráfico fuente para extraer logot
 | `WhatsApp Image ... 3.16.45 PM.jpeg` | Flyer resumen "Productos de calidad" (batería, lubricante, aceite) |
 
 ## Notas
-
+- Importante quitar el fondo al logo
 - No se cuenta con dirección física exacta de la sucursal ni con horario de atención — solicitar al cliente si se desea incluir mapa/horario en la sección de contacto.
 - No se cuenta con fotografías propias del local, del inventario real o del equipo — actualmente todo el material es gráfico/publicitario (flyers), por lo que probablemente se necesiten fotografías reales o se deba trabajar con las ilustraciones vectoriales existentes.
 - El teléfono/WhatsApp `5641131906` es el único canal de contacto directo confirmado en todos los materiales; debe ser el CTA primario del sitio.
