@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <em>Documento de referencia de negocio para el desarrollo de la landing page oficial (estilo premium / enterprise).</em>
+  <em>Documento de referencia de negocio para el desarrollo de pagina recuerda pasarle a claude que se quiere lograr estilo premium / enterprise.</em>
 </p>
 
 ---
@@ -230,9 +230,8 @@ Carpeta [`imagenes/`](imagenes/) — material gráfico fuente para extraer logot
 | `WhatsApp Image ... 3.16.45 PM (1).jpeg` | Flyer de catálogo de piezas (llantas, balatas, filtros, etc.) + marcas Italika/Vento |
 | `WhatsApp Image ... 3.16.45 PM.jpeg` | Flyer resumen "Productos de calidad" (batería, lubricante, aceite) |
 
-## Notas para el desarrollador
+## Notas
 
-- Uno de los materiales (`WhatsApp Image ... 3.16.44 PM.jpeg`) usa una **variante alterna del logotipo** (ilustración estilo mapache en blanco y negro) distinta al isotipo del motociclista usado en el resto del material. Se recomienda **confirmar con el cliente cuál es el logotipo oficial vigente** antes de implementarlo en el sitio; el resto de los materiales apunta consistentemente al isotipo del motociclista + engrane.
 - No se cuenta con dirección física exacta de la sucursal ni con horario de atención — solicitar al cliente si se desea incluir mapa/horario en la sección de contacto.
 - No se cuenta con fotografías propias del local, del inventario real o del equipo — actualmente todo el material es gráfico/publicitario (flyers), por lo que probablemente se necesiten fotografías reales o se deba trabajar con las ilustraciones vectoriales existentes.
 - El teléfono/WhatsApp `5641131906` es el único canal de contacto directo confirmado en todos los materiales; debe ser el CTA primario del sitio.
