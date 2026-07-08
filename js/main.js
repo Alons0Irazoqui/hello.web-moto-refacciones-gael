@@ -15,6 +15,32 @@
     document.documentElement.classList.add('js-reveal');
   }
 
+  /* ---------- Pantalla de carga ---------- */
+  var preloader = document.getElementById('preloader');
+  if (preloader) {
+    document.documentElement.classList.add('is-loading');
+    var preloaderStart = Date.now();
+    var MIN_PRELOADER_TIME = 600;
+
+    var hidePreloader = function () {
+      var elapsed = Date.now() - preloaderStart;
+      var wait = Math.max(0, MIN_PRELOADER_TIME - elapsed);
+      setTimeout(function () {
+        preloader.classList.add('is-hidden');
+        document.documentElement.classList.remove('is-loading');
+        setTimeout(function () {
+          if (preloader.parentNode) preloader.parentNode.removeChild(preloader);
+        }, 700);
+      }, wait);
+    };
+
+    if (document.readyState === 'complete') {
+      hidePreloader();
+    } else {
+      window.addEventListener('load', hidePreloader);
+    }
+  }
+
   /* ---------- Header height -> CSS var (mantiene el scroll-padding exacto) ---------- */
   var header = document.getElementById('header');
 
@@ -104,6 +130,115 @@
     } else {
       revealEls.forEach(function (el) { el.classList.add('is-visible'); });
     }
+  }
+
+  /* ---------- Partículas del hero ---------- */
+  var particlesCanvas = document.getElementById('heroParticles');
+  if (particlesCanvas && particlesCanvas.getContext && !prefersReducedMotion) {
+    var pCtx = particlesCanvas.getContext('2d');
+    var heroEl = particlesCanvas.closest('.hero');
+
+    if (heroEl) {
+      var particles = [];
+      var pWidth = 0, pHeight = 0, pDpr = 1, pRunning = true, pFrame = null;
+
+      var pTime = 0;
+
+      var makeParticle = function () {
+        return {
+          x: Math.random() * pWidth,
+          y: Math.random() * pHeight,
+          r: Math.random() * 1.8 + 1,
+          vx: (Math.random() - .5) * .16,
+          vy: -Math.random() * .22 - .04,
+          baseAlpha: Math.random() * .4 + .4,
+          phase: Math.random() * Math.PI * 2,
+          pulseSpeed: Math.random() * .02 + .012
+        };
+      };
+
+      var resizeParticles = function () {
+        pDpr = window.devicePixelRatio || 1;
+        pWidth = heroEl.offsetWidth;
+        pHeight = heroEl.offsetHeight;
+        particlesCanvas.width = pWidth * pDpr;
+        particlesCanvas.height = pHeight * pDpr;
+        particlesCanvas.style.width = pWidth + 'px';
+        particlesCanvas.style.height = pHeight + 'px';
+        pCtx.setTransform(pDpr, 0, 0, pDpr, 0, 0);
+        var count = Math.max(50, Math.min(140, Math.round((pWidth * pHeight) / 8500)));
+        particles = [];
+        for (var i = 0; i < count; i++) particles.push(makeParticle());
+      };
+
+      var stepParticles = function () {
+        if (!pRunning) return;
+        pTime++;
+        pCtx.clearRect(0, 0, pWidth, pHeight);
+        particles.forEach(function (p) {
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.y < -8) { p.y = pHeight + 8; p.x = Math.random() * pWidth; }
+          if (p.x < -8) p.x = pWidth + 8;
+          if (p.x > pWidth + 8) p.x = -8;
+
+          var pulse = (Math.sin(pTime * p.pulseSpeed + p.phase) + 1) / 2;
+          var radius = p.r * (.55 + pulse * .9);
+          var alpha = p.baseAlpha * (.35 + pulse * .65);
+
+          pCtx.beginPath();
+          pCtx.arc(p.x, p.y, radius, 0, Math.PI * 2);
+          pCtx.fillStyle = 'rgba(140, 197, 255, ' + alpha.toFixed(3) + ')';
+          pCtx.shadowColor = 'rgba(120, 185, 255, ' + (alpha * .8).toFixed(3) + ')';
+          pCtx.shadowBlur = 4 + pulse * 7;
+          pCtx.fill();
+        });
+        pCtx.shadowBlur = 0;
+        pFrame = window.requestAnimationFrame(stepParticles);
+      };
+
+      resizeParticles();
+      pFrame = window.requestAnimationFrame(stepParticles);
+      window.addEventListener('resize', debounce(resizeParticles, 200));
+      document.addEventListener('visibilitychange', function () {
+        pRunning = document.visibilityState === 'visible';
+        if (pRunning && !pFrame) pFrame = window.requestAnimationFrame(stepParticles);
+      });
+    }
+  }
+
+  /* ---------- Efecto de máquina de escribir en el título del hero ---------- */
+  var typewriterEl = document.getElementById('heroTypewriter');
+  if (typewriterEl && !prefersReducedMotion) {
+    var twWords = ['lo vale!', 'lo merece!', 'nos importa!'];
+    var twIndex = 0;
+    var twCaret = document.createElement('span');
+    twCaret.className = 'hero__caret';
+    twCaret.setAttribute('aria-hidden', 'true');
+    typewriterEl.textContent = '';
+    typewriterEl.parentNode.insertBefore(twCaret, typewriterEl.nextSibling);
+
+    var twType = function (charIndex) {
+      var word = twWords[twIndex];
+      typewriterEl.textContent = word.slice(0, charIndex);
+      if (charIndex < word.length) {
+        setTimeout(function () { twType(charIndex + 1); }, 85);
+      } else {
+        setTimeout(function () { twErase(word.length); }, 1600);
+      }
+    };
+
+    var twErase = function (charIndex) {
+      typewriterEl.textContent = twWords[twIndex].slice(0, charIndex);
+      if (charIndex > 0) {
+        setTimeout(function () { twErase(charIndex - 1); }, 40);
+      } else {
+        twIndex = (twIndex + 1) % twWords.length;
+        setTimeout(function () { twType(0); }, 350);
+      }
+    };
+
+    setTimeout(function () { twType(0); }, 550);
   }
 
   /* ---------- Botón volver arriba ---------- */

@@ -37,7 +37,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/styles.css">
 
@@ -71,6 +71,13 @@
   </script>
 </head>
 <body>
+
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader__inner">
+      <img src="imagenes/logo-transparent.png" alt="" class="preloader__logo" width="72" height="79">
+      <span class="preloader__spinner"></span>
+    </div>
+  </div>
 
   <a class="skip-link" href="#main">Saltar al contenido principal</a>
 
@@ -206,6 +213,7 @@
         <div class="hero__grid"></div>
         <div class="hero__glow hero__glow--1"></div>
         <div class="hero__glow hero__glow--2"></div>
+        <canvas class="hero__particles" id="heroParticles"></canvas>
       </div>
 
       <div class="container hero__inner">
@@ -213,7 +221,10 @@
           <p class="eyebrow eyebrow--light">Refacciones · Aceites · Baterías · Accesorios</p>
           <h1 class="hero__title">
             <span class="hero__title-line">¡Tu moto</span>
-            <span class="hero__title-line hero__title-line--accent">lo vale!</span>
+            <span class="hero__title-line hero__title-line--accent">
+              <span class="visually-hidden">lo vale!</span>
+              <span class="hero__typewriter" id="heroTypewriter" aria-hidden="true">lo vale!</span>
+            </span>
           </h1>
           <p class="hero__subtitle">
             Todo lo que tu moto necesita, <strong>en un solo lugar</strong>. Refacciones originales y genéricas,
@@ -592,7 +603,6 @@
 
     <!-- ============ CTA BAND ============ -->
     <section class="cta-band">
-      <img src="imagenes/cta-bg.jpg" alt="" class="cta-band__img" loading="lazy" aria-hidden="true">
       <div class="cta-band__overlay"></div>
       <div class="container cta-band__inner">
         <h2>Enciende tu pasión, <span>nosotros la cuidamos.</span></h2>
